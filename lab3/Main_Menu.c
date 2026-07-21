@@ -93,31 +93,31 @@ int main()
             if (kwh <= 0) {
             printf("So kwh khong hop le, vui long nhap so lon hon 0 (so duong)\n");
     } else {
-        double tongTien = 0;
+        double Tongtien = 0;
 
         if (kwh <= 50) {
-            tongTien = kwh * 1678;
+            Tongtien = kwh * 1678;
         } else {
             if (kwh <= 100) {
-                tongTien = (50 * 1678) + (kwh - 50) * 1734;
+                Tongtien = (50 * 1678) + (kwh - 50) * 1734;
             } else {
                 if (kwh <= 200) {
-                    tongTien = (50 * 1678) + (50 * 1734) + (kwh - 100) * 2014;
+                    Tongtien = (50 * 1678) + (50 * 1734) + (kwh - 100) * 2014;
                 } else {
                     if (kwh <= 300) {
-                        tongTien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (kwh - 200) * 2536;
+                        Tongtien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (kwh - 200) * 2536;
                     } else {
                         if (kwh <= 400) {
-                            tongTien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (100 * 2536) + (kwh - 300) * 2834;
+                            Tongtien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (100 * 2536) + (kwh - 300) * 2834;
                         } else {
-                            tongTien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (100 * 2536) + (100 * 2834) + (kwh - 400) * 2927;
+                           Tongtien = (50 * 1678) + (50 * 1734) + (100 * 2014) + (100 * 2536) + (100 * 2834) + (kwh - 400) * 2927;
                         }
                     }
                 }
             }
         }
 
-        printf("Tong tien dien phai tra: %.0lf VND\n", tongTien);
+        printf("Tong tien dien phai tra: %.0lf VND\n", Tongtien);
     }
     break;
         case 4:
