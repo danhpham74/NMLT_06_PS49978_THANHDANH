@@ -86,12 +86,12 @@ int main()
     }
             break;
         case 3:
-            printf("Ban da chon chuc nang 3: Chuc nang tinh tien dien tieu thu hang thang\n");
-            printf("Nhap vao tong so kWh da tieu thu trong thang: ");
+            printf("Ban da chon chuc nang 3: tinh tien dien tieu thu hang thang\n");
+            printf("Nhap vao tong so kwh da tieu thu trong thang: ");
             scanf("%lf", &kwh);
 
             if (kwh <= 0) {
-            printf("So kWh khong hop le, vui long nhap so lon hon 0 (so duong)!\n");
+            printf("So kwh khong hop le, vui long nhap so lon hon 0 (so duong)\n");
     } else {
         double tongTien = 0;
 
