@@ -17,7 +17,8 @@ int main() {
     x = -b / a;
     
     // Xuất ra nghiệm
-    printf("Nghiem cua phuong trinh %.2f*x + %.2f = 0 la: x = %.2f\n", a, b, x);
+    printf("Nghiem cua phuong trinh %.2f*x + %.2f = 0\n", a, b );
+    printf("x= %.2lf",x);
     
     return 0;
 }
