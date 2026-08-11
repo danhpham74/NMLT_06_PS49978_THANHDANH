@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
 #include <string.h>
-#include <float.h>
+#include <ctype.h>
 void menu();
 void chucNang1();
 void chucNang2();
@@ -17,6 +15,7 @@ int main()
         menu();
         printf("Ban hay chon chuc nang tu (1-5): ");
         scanf("%d", &chon);
+        getchar();
         switch (chon)
         {
         case 1:
@@ -58,59 +57,58 @@ void menu()
 
 void chucNang1()
 {
-    char s[256];
+    char s[50];
+    char strNA[10] = "ueoai";
     int demNA = 0;
     int demPA = 0;
-    printf("Nhap chuoi ki tu: ");
-    if(fgets(s,sizeof(s),stdin) != NULL){
-        demNguyenamPhuam
+    printf("Nhap chuoi ky tu: ");
+    fgets(s, sizeof(s), stdin);
+    for (int i = 0; i < strlen(s); i++)
+    {
+        char c = tolower((unsigned char)s[i]);
+        if (isalpha((unsigned char)c))
+        {
+            if (strchr(strNA, c) != NULL)
+            {
+                demNA++;
+            }
+            else
+            {
+                demPA++;
+            }
+        }
     }
+    printf("Chuoi moi nhap: %s\n", s);
+    printf("So nguyen am: %d\tSo phu am: %d\n", demNA, demPA);
 }
 
 void chucNang2()
 {
-    int n;
-    int a[10];
-    printf("Nhap n: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+
+    char User[20];
+    char Password[20];
+    char userSys[] = "ThanhDanh";
+    char PassSys[] = "Danh742007";
+    printf("User name: ");
+    fgets(User, sizeof(User), stdin);
+    User[strcspn(User, "\n")] = 0;
+    printf("Password: ");
+    fgets(Password, sizeof(Password), stdin);
+    Password[strcspn(Password, "\n")] = 0;
+    if (strcmp(User, userSys) == 0 && strcmp(Password, PassSys) == 0)
     {
-        printf("Nhap A[%d]= ", i);
-        scanf("%d", &a[i]);
+        printf("Dang nhap thanh cong\n");
     }
-    timMaxMin(a, n);
+    else
+    {
+        printf("Sai UserName hoac Password\n");
+    }
 }
 
 void chucNang3()
 {
-    int n;
-    int a[10];
-    printf("Nhap n: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-    {
-        printf("Nhap A[%d]= ", i);
-        scanf("%d", &a[i]);
-    }
-    sapXepGiamDan(a, n);
-}
-
-void swap(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
 }
 
 void chucNang4()
 {
-    maTranBinhPhuong(3, 3);
-}
-void demNguyenamPhuam(const char *s,int *demNA,int *demPA)
-{
-    *demNA = 0;
-    *demPA = 0;
-    for(int i = 0;s[i] != '\0';i++){
-
-    }
 }
