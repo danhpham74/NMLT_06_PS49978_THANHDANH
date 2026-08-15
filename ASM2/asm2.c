@@ -3,6 +3,8 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
+
 struct giaDien
 {
     int mucTieuThu;
@@ -18,6 +20,7 @@ struct phanSo
     int tu;
     int mau;
 };
+
 void menu();
 void chucNang1();
 void chucNang2();
@@ -29,12 +32,12 @@ void chucNang7();
 void chucNang8();
 void chucNang9();
 void chucNang10();
+
 bool kiemTraSoNguyen(float so);
 bool kiemTraSNT(int so);
 bool kiemTraSCP(int so);
 int timUCLN(int a, int b);
 int timBCNN(int a, int b);
-struct phanSo nhapPS();
 
 int main()
 {
@@ -42,8 +45,14 @@ int main()
     do
     {
         menu();
-        printf("Ban hay chon chuc nang tu (1-6): ");
-        scanf("%d", &chon);
+        printf("Ban hay chon chuc nang tu 0-10: ");
+        if (scanf("%d", &chon) != 1)
+        {
+            chon = -1;
+            while (getchar() != '\n')
+                ;
+        }
+
         switch (chon)
         {
         case 1:
@@ -77,10 +86,10 @@ int main()
             chucNang10();
             break;
         case 0:
-            printf("Ban da thoat chuong trinh");
+            printf("Ban da thoat chuong trinh\n");
             break;
         default:
-            printf("Ban phai chon chuc nang tu 1 - 10\n");
+            printf("Ban phai chon chuc nang tu 0 - 10\n");
             break;
         }
     } while (chon != 0);
@@ -103,14 +112,13 @@ void menu()
     printf("|8.Chuc nang sap xep thong tin sinh vien            |\n");
     printf("|9.Chuc nang GAME FPOLY-LOTT                        |\n");
     printf("|10.Chuc nang tinh toan phan so                     |\n");
-    printf("|0.Thoat chuong trinh                              |\n");
+    printf("|0.Thoat chuong trinh                               |\n");
     printf("+---------------------------------------------------+\n");
 }
 
 void chucNang1()
 {
     float so;
-    getchar();
     printf("Nhap so bat ki: ");
     scanf("%f", &so);
     if (kiemTraSoNguyen(so))
@@ -118,19 +126,19 @@ void chucNang1()
         printf("So %.2f la so nguyen\n", so);
         if (kiemTraSNT((int)so))
         {
-            printf("So %.2f la so nguyen to\n", so);
+            printf("So %d la so nguyen to\n", (int)so);
         }
         else
         {
-            printf("So %.2f khong phai la so nguyen to\n", so);
+            printf("So %d khong phai la so nguyen to\n", (int)so);
         }
         if (kiemTraSCP((int)so))
         {
-            printf("So %.2f la so chinh phuong\n", so);
+            printf("So %d la so chinh phuong\n", (int)so);
         }
         else
         {
-            printf("So %.2f khong phai la so chinh phuong\n", so);
+            printf("So %d khong phai la so chinh phuong\n", (int)so);
         }
     }
     else
@@ -138,6 +146,7 @@ void chucNang1()
         printf("So %.2f khong phai la so nguyen\n", so);
     }
 }
+
 bool kiemTraSoNguyen(float so)
 {
     if ((int)so == so)
@@ -149,24 +158,27 @@ bool kiemTraSoNguyen(float so)
         return false;
     }
 }
+
 bool kiemTraSNT(int so)
 {
-
     if (so < 2)
         return false;
-    if (so == 2)
-        return true;
-    for (int i = 2; i <= so; i++)
+    for (int i = 2; i <= sqrt(so); i++)
     {
         if (so % i == 0)
         {
             return false;
         }
     }
+    return true;
 }
+
 bool kiemTraSCP(int so)
 {
-    if (kiemTraSoNguyen(sqrt(so)))
+    if (so < 0)
+        return false;
+    int can = sqrt(so);
+    if (can * can == so)
     {
         return true;
     }
@@ -175,25 +187,29 @@ bool kiemTraSCP(int so)
         return false;
     }
 }
+
 int timUCLN(int a, int b)
 {
     while (b != 0)
     {
-        int du = a & b;
+        int du = a % b;
         a = b;
         b = du;
     }
     return a;
 }
+
 int timBCNN(int a, int b)
 {
-    return (a * b) / timUCLN(a, b);
+    if (a == 0 || b == 0)
+        return 0;
+    return (abs(a * b)) / timUCLN(a, b);
 }
 
 void chucNang2()
 {
     int a, b;
-    printf("Nhap a,b: ");
+    printf("Nhap a, b: ");
     scanf("%d%d", &a, &b);
     int ucln = timUCLN(a, b);
     int bcnn = timBCNN(a, b);
@@ -203,12 +219,15 @@ void chucNang2()
 
 void chucNang3()
 {
-    int gioVao, gioRa, tongTien, soGio;
+    int gioVao, gioRa;
+    float tongTien;
+    int soGio;
     do
     {
-        printf("Nhap gio vao va gio ra: ");
+        printf("Nhap gio vao va gio ra (12-23): ");
         scanf("%d%d", &gioVao, &gioRa);
     } while ((gioVao > gioRa) || (gioVao < 12) || (gioRa > 23));
+
     soGio = gioRa - gioVao;
     if (soGio <= 3)
     {
@@ -222,8 +241,9 @@ void chucNang3()
     {
         tongTien *= 0.9;
     }
-    printf("Tong tien karaok tu %d den %d la :%dVND\n", gioVao, gioRa, tongTien);
+    printf("Tong tien karaoke tu %d den %d la : %.0f VND\n", gioVao, gioRa, tongTien);
 }
+
 void chucNang4()
 {
     struct giaDien bangGiaDien[6] = {
@@ -234,37 +254,39 @@ void chucNang4()
         {400, 2834},
         {401, 2927},
     };
-    int soKW, tongtien = 0;
+    int soKW;
+    float tongtien = 0;
 
     printf("Nhap so KW tieu thu: ");
     scanf("%d", &soKW);
-    if (soKW <= bangGiaDien[0].mucTieuThu)
+    if (soKW <= 50)
     {
         tongtien = soKW * bangGiaDien[0].gia;
     }
-    else if (soKW <= bangGiaDien[1].mucTieuThu)
+    else if (soKW <= 100)
     {
         tongtien = 50 * bangGiaDien[0].gia + (soKW - 50) * bangGiaDien[1].gia;
     }
-    else if (soKW <= bangGiaDien[2].mucTieuThu)
+    else if (soKW <= 200)
     {
-        tongtien = 50 * bangGiaDien[0].gia + (50) * bangGiaDien[1].gia + (soKW - 100) * bangGiaDien[2].gia;
+        tongtien = 50 * bangGiaDien[0].gia + 50 * bangGiaDien[1].gia + (soKW - 100) * bangGiaDien[2].gia;
     }
-    else if (soKW <= bangGiaDien[3].mucTieuThu)
+    else if (soKW <= 300)
     {
-        tongtien = 50 * bangGiaDien[0].gia + (50) * bangGiaDien[1].gia + (100) * bangGiaDien[2].gia + (soKW - 200) * bangGiaDien[3].gia;
+        tongtien = 50 * bangGiaDien[0].gia + 50 * bangGiaDien[1].gia + 100 * bangGiaDien[2].gia + (soKW - 200) * bangGiaDien[3].gia;
     }
-    else if (soKW <= bangGiaDien[4].mucTieuThu)
+    else if (soKW <= 400)
     {
-        tongtien = 50 * bangGiaDien[0].gia + (50) * bangGiaDien[1].gia + (100) * bangGiaDien[2].gia + (100) * bangGiaDien[3].gia + (soKW - 300) * bangGiaDien[4].gia;
+        tongtien = 50 * bangGiaDien[0].gia + 50 * bangGiaDien[1].gia + 100 * bangGiaDien[2].gia + 100 * bangGiaDien[3].gia + (soKW - 300) * bangGiaDien[4].gia;
     }
     else
     {
-        tongtien = 50 * bangGiaDien[0].gia + (50) * bangGiaDien[1].gia + (100) * bangGiaDien[2].gia + (100) * bangGiaDien[3].gia + (100) * bangGiaDien[4].gia + (soKW - 400) * bangGiaDien[5].gia;
+        tongtien = 50 * bangGiaDien[0].gia + 50 * bangGiaDien[1].gia + 100 * bangGiaDien[2].gia + 100 * bangGiaDien[3].gia + 100 * bangGiaDien[4].gia + (soKW - 400) * bangGiaDien[5].gia;
     }
-    printf("Tong tien tieu thu cua %d KW la :%d\n", soKW, tongtien);
+    printf("Tong tien tieu thu cua %d KW la : %.0f VND\n", soKW, tongtien);
 }
-void chucnang5()
+
+void chucNang5()
 {
     struct loaitiente
     {
@@ -292,8 +314,6 @@ void chucnang5()
     {
         dstiente[i].soluongto = temp / dstiente[i].menhGia;
         temp = temp % dstiente[i].menhGia;
-        if (temp == 0)
-            break;
     }
 
     for (int i = sopt - 1; i >= 0; i--)
@@ -305,7 +325,7 @@ void chucnang5()
     }
 }
 
-void chucnang6()
+void chucNang6()
 {
     int tienvay = 12000000, kyhan = 12;
     float laithang = 0.05;
@@ -320,7 +340,7 @@ void chucnang6()
     }
 }
 
-void chucnang7()
+void chucNang7()
 {
     double giaXe;
     printf("Nhap gia tri xe (VND): ");
@@ -329,7 +349,7 @@ void chucnang7()
     double phanTramVay = 0.8;
     double tienVay = giaXe * phanTramVay;
     double tienTraTruoc = giaXe * (1.0 - phanTramVay);
-    int nam = 24;
+    int nam = 2;
     int thang = nam * 12;
     double laiSuatNam = 0.072;
     double laiSuatThang = laiSuatNam / 12;
@@ -348,7 +368,7 @@ void chucnang7()
     printf("Tong so tien phai tra lan dau: %.0lf VND\n", tienTraLanDau);
 }
 
-void chucnang8()
+void chucNang8()
 {
     int n;
     printf("Nhap so luong sinh vien: ");
@@ -359,8 +379,8 @@ void chucnang8()
     {
         printf("\nNhap thong tin sinh vien thu %d:\n", i + 1);
         printf("Ho va ten: ");
-        fflush(stdin);
-        getchar(); // Đọc ký tự thừa
+        while (getchar() != '\n')
+            ; // Làm sạch bộ nhớ đệm an toàn
         fgets(sv[i].hoTen, sizeof(sv[i].hoTen), stdin);
         sv[i].hoTen[strcspn(sv[i].hoTen, "\n")] = 0;
 
@@ -409,14 +429,16 @@ void chucNang9()
     {
         r2 = rand() % 15 + 1;
     } while (r1 == r2);
+
     int a, b;
-    printf("Nhap hai so(1-15):");
+    printf("Nhap hai so (1-15): ");
     scanf("%d%d", &a, &b);
     int dem = 0;
     if ((a == r1) || (a == r2))
         dem++;
     if ((b == r1) || (b == r2))
         dem++;
+
     switch (dem)
     {
     case 0:
@@ -427,32 +449,47 @@ void chucNang9()
         break;
     case 2:
         printf("Chuc mung ban da trung giai nhat\n");
-
+        break;
     default:
         break;
     }
 }
+
 void chucNang10()
 {
     struct phanSo ps1, ps2, psTong, psHieu, psTich, psThuong;
-    printf("Nhap phan so 1(tu mau):");
+    printf("Nhap phan so 1 (tu mau): ");
     scanf("%d%d", &ps1.tu, &ps1.mau);
-    printf("Nhap phan so 2(tu mau):");
+    printf("Nhap phan so 2 (tu mau): ");
     scanf("%d%d", &ps2.tu, &ps2.mau);
+
+    if (ps1.mau == 0 || ps2.mau == 0)
+    {
+        printf("Mau so khong the bang 0!\n");
+        return;
+    }
 
     psTong.tu = ps1.tu * ps2.mau + ps2.tu * ps1.mau;
     psTong.mau = ps1.mau * ps2.mau;
 
     psHieu.tu = ps1.tu * ps2.mau - ps2.tu * ps1.mau;
-    psTong.mau = ps1.mau * ps2.mau;
+    psHieu.mau = ps1.mau * ps2.mau;
 
     psTich.tu = ps1.tu * ps2.tu;
     psTich.mau = ps1.mau * ps2.mau;
 
     psThuong.tu = ps1.tu * ps2.mau;
     psThuong.mau = ps1.mau * ps2.tu;
-    printf("Tong:%d/%d+%d/%d=%d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psTong);
-    printf("Hieu:%d/%d+%d/%d=%d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psHieu);
-    printf("Tich:%d/%d+%d/%d=%d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psTich);
-    printf("Thuong:%d/%d+%d/%d=%d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psThuong);
+
+    printf("Tong: %d/%d + %d/%d = %d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psTong.tu, psTong.mau);
+    printf("Hieu: %d/%d - %d/%d = %d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psHieu.tu, psHieu.mau);
+    printf("Tich: %d/%d * %d/%d = %d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psTich.tu, psTich.mau);
+    if (psThuong.mau != 0)
+    {
+        printf("Thuong: %d/%d / %d/%d = %d/%d\n", ps1.tu, ps1.mau, ps2.tu, ps2.mau, psThuong.tu, psThuong.mau);
+    }
+    else
+    {
+        printf("Khong the chia cho phan so co tu so bang 0!\n");
+    }
 }
