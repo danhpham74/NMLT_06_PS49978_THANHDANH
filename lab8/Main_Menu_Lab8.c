@@ -165,6 +165,44 @@ void chucNang2(struct SinhVien ds[], int n)
 
 void chucNang3(struct SinhVien ds[], int n)
 {
+    if (n <= 0)
+    {
+        printf("\nDanh sach hien tai dang trong. Vui long nhap thong tin o chuc nang 1 truoc!\n");
+        return;
+    }
+    char mssvTim[50];
+    int found = 0;
+    printf("\nNhap Ma so sinh vien can tim: ");
+    fgets(mssvTim, sizeof(mssvTim), stdin);
+    mssvTim[strcspn(mssvTim, "\n")] = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (strcmp(ds[i].mssv, mssvTim) == 0)
+        {
+            if (found == 0)
+            {
+                printf("\nTHONG TIN SINH VIEN TIM THAY\n");
+                printf("======================================================================================\n");
+                printf("| %-15s | %-25s | %-25s | %-7s |\n", "MSSV", "Ho va ten", "Nganh hoc", "Diem TB");
+                printf("======================================================================================\n");
+            }
+            printf("| %-15s | %-25s | %-25s | %-7.2f |\n",
+                   ds[i].mssv,
+                   ds[i].tenSV,
+                   ds[i].nganhHoc,
+                   ds[i].diemTB);
+            found = 1;
+            break;
+        }
+    }
+    if (found == 1)
+    {
+        printf("======================================================================================\n");
+    }
+    if (found == 0)
+    {
+        printf("\nKhong tim thay sinh vien co MSSV \"%s\" nay!\n", mssvTim);
+    }
 }
 
 void chucNang4(struct SinhVien ds[], int n)
