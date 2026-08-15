@@ -129,6 +129,38 @@ void chucNang1(struct SinhVien ds[], int *n)
 
 void chucNang2(struct SinhVien ds[], int n)
 {
+    if (n <= 0)
+    {
+        printf("\nDanh sach hien tai dang trong. Vui long nhap thong tin o chuc nang 1 truoc!\n");
+        return;
+    }
+    struct SinhVien temp;
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (ds[i].diemTB > ds[j].diemTB)
+            {
+                temp = ds[i];
+                ds[i] = ds[j];
+                ds[j] = temp;
+            }
+        }
+    }
+    printf("\nDANH SACH SINH VIEN SAU KHI SAP XEP (DIEM TB TANG DAN)\n");
+    printf("======================================================================================\n");
+    printf("| %-15s | %-25s | %-25s | %-7s |\n", "MSSV", "Ho va ten", "Nganh hoc", "Diem TB");
+    printf("======================================================================================\n");
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("| %-15s | %-25s | %-25s | %-7.2f |\n",
+               ds[i].mssv,
+               ds[i].tenSV,
+               ds[i].nganhHoc,
+               ds[i].diemTB);
+    }
+    printf("======================================================================================\n");
 }
 
 void chucNang3(struct SinhVien ds[], int n)
