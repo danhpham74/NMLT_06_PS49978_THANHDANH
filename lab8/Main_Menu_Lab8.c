@@ -1,43 +1,54 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-void menu();
-void chucNang1();
-void chucNang2();
-void chucNang3();
-void chucNang4();
-struct SinhVien {
+struct SinhVien
+{
     char mssv[50];
     char tenSV[50];
     char nganhHoc[50];
     float diemTB;
 };
+void menu();
+void chucNang1(struct SinhVien ds[], int *n);
+void chucNang2(struct SinhVien ds[], int n);
+void chucNang3(struct SinhVien ds[], int n);
+void chucNang4(struct SinhVien ds[], int n);
 
 int main()
 {
+    struct SinhVien danhSach[100];
+    int n = 0;
     int chon;
+
     do
     {
         menu();
         printf("Ban hay chon chuc nang tu (1-5): ");
-        scanf("%d", &chon);
-        getchar();
+
+        if (scanf("%d", &chon) != 1)
+        {
+            chon = 0;
+        }
+        while (getchar() != '\n')
+            ;
+
         switch (chon)
         {
         case 1:
-            chucNang1();
+
+            chucNang1(danhSach, &n);
             break;
         case 2:
-            chucNang2();
+            chucNang2(danhSach, n);
             break;
         case 3:
-            chucNang3();
+            chucNang3(danhSach, n);
             break;
         case 4:
-            chucNang4();
+            chucNang4(danhSach, n);
             break;
         case 5:
-            printf("Ban da thoat chuong trinh");
+            printf("Ban da thoat chuong trinh\n");
             break;
         default:
             printf("Ban phai chon chuc nang tu 1 - 5\n");
@@ -50,7 +61,7 @@ int main()
 
 void menu()
 {
-    printf("+---------------------------------------------------+\n");
+    printf("\n+---------------------------------------------------+\n");
     printf("|             HE THONG QUAN LY SINH VIEN            |\n");
     printf("+---------------------------------------------------+\n");
     printf("| 1. Nhap va xuat danh sach sinh vien               |\n");
@@ -61,23 +72,69 @@ void menu()
     printf("+---------------------------------------------------+\n");
 }
 
-void chucNang1()
+void chucNang1(struct SinhVien ds[], int *n)
 {
-    
+    do
+    {
+        printf("Nhap so luong sinh vien n: ");
+        if (scanf("%d", n) != 1)
+        {
+            while (getchar() != '\n')
+                ;
+            *n = -1;
+            continue;
+        }
+        while (getchar() != '\n')
+            ;
+
+        if (*n <= 0)
+        {
+            printf("So luong sinh vien phai lon hon 0. Vui long nhap lai!\n");
+        }
+    } while (*n <= 0);
+
+    printf("\nNHAP THONG TIN %d SINH VIEN\n", *n);
+    for (int i = 0; i < *n; i++)
+    {
+        printf("Nhap thong tin sinh vien thu %d:\n", i + 1);
+
+        printf("  - MSSV: ");
+        fgets(ds[i].mssv, sizeof(ds[i].mssv), stdin);
+        ds[i].mssv[strcspn(ds[i].mssv, "\n")] = 0;
+
+        printf("  - Ho va ten: ");
+        fgets(ds[i].tenSV, sizeof(ds[i].tenSV), stdin);
+        ds[i].tenSV[strcspn(ds[i].tenSV, "\n")] = 0;
+
+        printf("  - Nganh hoc: ");
+        fgets(ds[i].nganhHoc, sizeof(ds[i].nganhHoc), stdin);
+        ds[i].nganhHoc[strcspn(ds[i].nganhHoc, "\n")] = 0;
+
+        printf("  - Diem TB: ");
+        scanf("%f", &ds[i].diemTB);
+        while (getchar() != '\n')
+            ;
+    }
+
+    printf("\n======================================================================================\n");
+    printf("| %-15s | %-25s | %-25s | %-7s |\n", "MSSV", "Ho va ten", "Nganh hoc", "Diem TB");
+    printf("======================================================================================\n");
+    for (int i = 0; i < *n; i++)
+    {
+        printf("| %-15s | %-25s | %-25s | %-7.2f |\n",
+               ds[i].mssv, ds[i].tenSV, ds[i].nganhHoc, ds[i].diemTB);
+    }
+    printf("======================================================================================\n");
 }
 
-void chucNang2()
+void chucNang2(struct SinhVien ds[], int n)
 {
-
-    
 }
 
-void chucNang3()
+void chucNang3(struct SinhVien ds[], int n)
 {
-    
 }
 
-void chucNang4()
+void chucNang4(struct SinhVien ds[], int n)
 {
-    
 }
