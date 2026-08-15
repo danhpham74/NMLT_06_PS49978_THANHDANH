@@ -207,4 +207,72 @@ void chucNang3(struct SinhVien ds[], int n)
 
 void chucNang4(struct SinhVien ds[], int n)
 {
+    {
+        if (n <= 0)
+        {
+            printf("\nDanh sach hien tai dang trong. Vui long nhap thong tin o chuc nang 1 truoc!\n");
+            return;
+        }
+
+        int count = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (ds[i].diemTB >= 8.0)
+            {
+                count++;
+            }
+        }
+
+        if (count == 0)
+        {
+            printf("\nKhong co sinh vien nao dat hoc bong (Diem TB >= 8.0)!\n");
+            return;
+        }
+
+        printf("\nDANH SACH SINH VIEN DAT HOC BONG (DIEM TB >= 8.0)\n");
+
+        char nganhDaDuyet[100][50];
+        int soLuongNganh = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (ds[i].diemTB >= 8.0)
+            {
+                int daTonTai = 0;
+                for (int j = 0; j < soLuongNganh; j++)
+                {
+                    if (strcmp(nganhDaDuyet[j], ds[i].nganhHoc) == 0)
+                    {
+                        daTonTai = 1;
+                        break;
+                    }
+                }
+                if (!daTonTai)
+                {
+                    strcpy(nganhDaDuyet[soLuongNganh], ds[i].nganhHoc);
+                    soLuongNganh++;
+                }
+            }
+        }
+
+        for (int i = 0; i < soLuongNganh; i++)
+        {
+            printf("\nNGANH HOC: %s\n", nganhDaDuyet[i]);
+            printf("===================================================================\n");
+            printf("| %-15s | %-35s | %-7s |\n", "MSSV", "Ho va ten", "Diem TB");
+            printf("===================================================================\n");
+
+            for (int j = 0; j < n; j++)
+            {
+                if (ds[j].diemTB >= 8.0 && strcmp(ds[j].nganhHoc, nganhDaDuyet[i]) == 0)
+                {
+                    printf("| %-15s | %-35s | %-7.2f |\n",
+                           ds[j].mssv,
+                           ds[j].tenSV,
+                           ds[j].diemTB);
+                }
+            }
+            printf("===================================================================\n");
+        }
+    }
 }
