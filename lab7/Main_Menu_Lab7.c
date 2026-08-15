@@ -107,8 +107,73 @@ void chucNang2()
 
 void chucNang3()
 {
+    char s[5][50];
+    char temp[50];
+    int i, j;
+
+    printf("Nhap danh sach chuoi\n");
+    for (i = 0; i < 5; i++)
+    {
+        printf("Nhap chuoi/ten thu %d: ", i + 1);
+        fgets(s[i], sizeof(s[i]), stdin);
+        s[i][strcspn(s[i], "\n")] = 0;
+    }
+    for (i = 0; i < 4; i++)
+    {
+        for (j = i + 1; j < 5; j++)
+        {
+            if (strcmp(s[i], s[j]) > 0)
+            {
+                strcpy(temp, s[i]);
+                strcpy(s[i], s[j]);
+                strcpy(s[j], temp);
+            }
+        }
+    }
+    printf("\nDanh sach sau sap xep tang dan\n");
+    for (i = 0; i < 5; i++)
+    {
+        printf("%d. %s\n", i + 1, s[i]);
+    }
 }
 
 void chucNang4()
 {
+    int n;
+    char nhiPhan[50];
+    int i = 0;
+    do
+    {
+        printf("Nhap vao mot so nguyen duong thap phan: ");
+        scanf("%d", &n);
+        if (n < 0)
+        {
+            printf("Vui long nhap so >= 0!\n");
+        }
+    } while (n < 0);
+    if (n == 0)
+    {
+        strcpy(nhiPhan, "0");
+    }
+    else
+    {
+        int temp = n;
+        while (temp > 0)
+        {
+            int du = temp % 2;
+            nhiPhan[i] = du + '0';
+            i++;
+            temp = temp / 2;
+        }
+        nhiPhan[i] = '\0';
+        int len = strlen(nhiPhan);
+        for (int j = 0; j < len / 2; j++)
+        {
+            char t = nhiPhan[j];
+            nhiPhan[j] = nhiPhan[len - 1 - j];
+            nhiPhan[len - 1 - j] = t;
+        }
+    }
+
+    printf("So nhi phan cua %d la: %s\n", n, nhiPhan);
 }
